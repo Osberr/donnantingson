@@ -24,152 +24,151 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController userController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  // Método signUserIn
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: ListView(
-          children: [
-            Stack(
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/img/imagenlogin.png'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Center(
+            child: ListView(
               children: [
-                Container(
-                  width: double.maxFinite,
-                  height: double.maxFinite,
-                  child: Image(
-                    image: AssetImage('assets/img/imagenlogin.png'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Center(
-                  child: Column(
-                    children: [
-                      SizedBox(height: 50),
-                      // Logo
-                      Icon(
-                        Icons.lock,
-                        size: 100,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: 50),
+                    Icon(
+                      Icons.lock,
+                      size: 100,
+                      color: Colors.grey[700],
+                    ),
+                    const SizedBox(height: 50),
+                    Text(
+                      "DONNANTING-SON",
+                      style: TextStyle(
                         color: Colors.grey[700],
+                        fontSize: 16,
                       ),
-                      const SizedBox(height: 50),
-                      Text(
-                        "DONNANTING SON",
-                        style: TextStyle(
-                          color: Colors.grey[700],
-                          fontSize: 16,
-                        ),
-                      ),
-                      const SizedBox(height: 25),
-
-                      // Username
-                      Form(
-                        child: Column(
-                          key: _formKey,
-                          children: [
-                            TextFormField(
-                              controller: userController,
-                              decoration: InputDecoration(
-                                labelText: 'Correo',
-                              ),
-                            ),
-                            TextFormField(
-                              controller: passwordController,
-                              decoration: InputDecoration(
-                                labelText: 'Contraseña',
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      SizedBox(height: 25),
-
-                      ElevatedButton(
-                        onPressed: () async {
-                          dynamic result = await _auth.signInEmailPassword(
-                              LoginUser(
-                                  email: userController.text,
-                                  password: passwordController.text));
-                          print("Test: ${result.uid}");
-                          if (result.uid == null) {
-                            Fluttertoast.showToast(
-                                msg:
-                                    "Algo salio mal al intentar iniciar session. Verifique si los datos estan correctos");
-                          } else {
-                            Fluttertoast.showToast(
-                                msg: "Bienvenido, ${result.uid}");
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (BuildContext context) =>
-                                        MenuPrincipal()));
-                          }
-                        },
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStatePropertyAll<Color>(Colors.red),
-                        ),
-                        //
-                        child: Text(
-                          "Iniciar Sesion",
-                          style: TextStyle(color: Colors.white, fontSize: 16.0),
-                        ),
-                      ),
-                      const SizedBox(height: 25),
-
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) =>
-                                      RegistroUsuarioScreen()));
-                        },
-                        style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStatePropertyAll<Color>(Colors.red),
-                        ),
-                        //
-                        child: Text(
-                          "Registrar",
-                          style: TextStyle(color: Colors.white, fontSize: 16.0),
-                        ),
-                      ),
-
-                      const SizedBox(height: 25),
-
-                      Row(
+                    ),
+                    const SizedBox(height: 25),
+                    Form(
+                      child: Column(
+                        key: _formKey,
                         children: [
-                          Expanded(
-                            child: Divider(
-                              thickness: 0.5,
-                              color: Colors.grey[400],
+                          TextFormField(
+                            controller: userController,
+                            decoration: InputDecoration(
+                              labelText: 'Correo',
                             ),
                           ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 10.0),
-                            child: Text(
-                              "o continua con",
-                              style: TextStyle(
-                                color: Colors.grey[700],
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Divider(
-                              thickness: 0.5,
-                              color: Colors.grey[400],
+                          TextFormField(
+                            controller: passwordController,
+                            decoration: InputDecoration(
+                              labelText: 'Contraseña',
                             ),
                           ),
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: 25),
+                    ElevatedButton(
+                      onPressed: () async {
+                        dynamic result = await _auth.signInEmailPassword(
+                          LoginUser(
+                            email: userController.text,
+                            password: passwordController.text,
+                          ),
+                        );
+                        print("Test: ${result.uid}");
+                        if (result.uid == null) {
+                          Fluttertoast.showToast(
+                            msg:
+                                "Algo salió mal al intentar iniciar sesión. Verifique si los datos son correctos",
+                          );
+                        } else {
+                          Fluttertoast.showToast(
+                            msg: "Bienvenido, ${result.uid}",
+                          );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  MenuPrincipal(),
+                            ),
+                          );
+                        }
+                      },
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStatePropertyAll<Color>(Colors.red),
+                      ),
+                      child: Text(
+                        "Iniciar Sesión",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 25),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (BuildContext context) =>
+                                RegistroUsuarioScreen(),
+                          ),
+                        );
+                      },
+                      style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStatePropertyAll<Color>(Colors.red),
+                      ),
+                      child: Text(
+                        "Registrar",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 25),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Divider(
+                            thickness: 0.5,
+                            color: Colors.grey[400],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          child: Text(
+                            "o continua con",
+                            style: TextStyle(
+                              color: Colors.grey[700],
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Divider(
+                            thickness: 0.5,
+                            color: Colors.grey[400],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
+          ),
         ),
       ),
     );
